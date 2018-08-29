@@ -164,7 +164,11 @@ public class PermissionedCredentialService {
   }
 
   public List<FindCredentialResult> findStartingWithPath(String path) {
-    return credentialVersionDataService.findStartingWithPath(path);
+    return findStartingWithPath(path, "");
+  }
+
+  public List<FindCredentialResult> findStartingWithPath(String path, String expiresWithinDays) {
+    return credentialVersionDataService.findStartingWithPath(path, expiresWithinDays);
   }
 
 

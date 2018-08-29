@@ -112,21 +112,26 @@ public class CredentialsController {
     }
   }
 
-  @RequestMapping(path = "", params = "path", method = RequestMethod.GET)
+  @RequestMapping(path = "", params = {"path", "expires-within-days"}, method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
-  public FindCredentialResults findByPath(@RequestParam("path") String path) {
+  public FindCredentialResults findByPath(@RequestParam("path") String path,
+                                          @RequestParam("expires-within-days") String expiresWithinDays) {
     FindCredential findCredential = new FindCredential();
     findCredential.setPath(path);
+    findCredential.setExpiresWithinDays(expiresWithinDays);
     auditRecord.setRequestDetails(findCredential);
 
-    return new FindCredentialResults(credentialService.findStartingWithPath(path));
+    return new FindCredentialResults(credentialService.findStartingWithPath(path, expiresWithinDays));
   }
 
-  @RequestMapping(path = "", params = "name-like", method = RequestMethod.GET)
+  //TODO complete this method
+  @RequestMapping(path = "", params = {"name-like", "expires-within-days"}, method = RequestMethod.GET)
   @ResponseStatus(HttpStatus.OK)
-  public FindCredentialResults findByNameLike(@RequestParam("name-like") String nameLike) {
+  public FindCredentialResults findByNameLike(@RequestParam("name-like") String nameLike,
+                                              @RequestParam("expires-within-days") String expiresWithinDays) {
     FindCredential findCredential = new FindCredential();
     findCredential.setNameLike(nameLike);
+    findCredential.setExpiresWithinDays(expiresWithinDays);
     auditRecord.setRequestDetails(findCredential);
 
     return new FindCredentialResults(credentialService.findContainingName(nameLike));
